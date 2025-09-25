@@ -10,7 +10,6 @@ A task management system built with NestJS, featuring user authentication, task 
 - 🔔 **Real-time Notifications** - Bull queue-based task completion notifications
 - 📊 **Pagination** - Efficient data pagination for large datasets
 - 🗄️ **Database Integration** - PostgreSQL with TypeORM for robust data persistence
-- 🧪 **Comprehensive Testing** - Unit tests with 100% service coverage
 - 🐳 **Docker Support** - Full containerization with Docker Compose
 
 ## 🛠️ Tech Stack
