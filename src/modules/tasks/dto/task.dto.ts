@@ -2,7 +2,7 @@ import { IsString, IsOptional, IsEnum, IsUUID, IsArray, ValidateNested } from 'c
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { AbstractDto, AbstractIdentityDto } from '../../../core/shared/abstract.dto';
-import { TaskStatus } from '../enums/task-status.enum';
+import { TaskStatuses, TaskStatusType } from '../../../core/shared/types';
 import { CommentResponseDto } from './comment.dto';
 import { TaskEntity } from '../entities/task.entity';
 
@@ -36,11 +36,11 @@ export class UpdateTaskDto {
 
   @ApiPropertyOptional({ 
     description: 'Task status',
-    enum: TaskStatus
+    enum: TaskStatuses
   })
   @IsOptional()
-  @IsEnum(TaskStatus)
-  status?: TaskStatus;
+  @IsEnum(TaskStatuses)
+  status?: TaskStatusType;
 }
 
 export class TaskResponseDto extends AbstractIdentityDto {
@@ -52,9 +52,9 @@ export class TaskResponseDto extends AbstractIdentityDto {
 
   @ApiProperty({ 
     description: 'Task status',
-    enum: TaskStatus
+    enum: TaskStatuses
   })
-  status: TaskStatus;
+  status: TaskStatusType;
 
   @ApiProperty({ description: 'User ID who owns the task' })
   userId: string;

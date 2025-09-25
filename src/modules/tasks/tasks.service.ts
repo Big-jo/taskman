@@ -4,7 +4,6 @@ import { FindOptionsWhere, ILike, Like, Repository } from 'typeorm';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { TaskEntity } from './entities/task.entity';
-import { TaskStatus } from './enums/task-status.enum';
 import { CommentEntity } from './entities/comment.entity';
 import { CreateTaskDto, UpdateTaskDto, CreateTaskCommentDto } from './dto/task.dto';
 import { UserEntity } from '../users/entities/user.entity';
@@ -83,7 +82,7 @@ export class TasksService {
     Object.assign(task, updateTaskDto);
     const updatedTask = await this.taskRepository.save(task);
 
-    if (previousStatus !== TaskStatus.COMPLETED && newStatus === TaskStatus.COMPLETED) {
+    if (previousStatus !== 'completed' && newStatus === 'completed') {
       await this.taskNotificationQueue.add('task-completed', {
         taskId: task.id,
         userId: task.userId,

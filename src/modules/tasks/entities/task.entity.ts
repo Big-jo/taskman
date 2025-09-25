@@ -3,7 +3,7 @@ import { AbstractIdentityEntity } from '../../../core/shared/abstract.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 import { CommentEntity } from './comment.entity';
 import { TaskResponseDto } from '../dto/task.dto';
-import { TaskStatus } from '../enums/task-status.enum';
+import { TaskStatusType } from '../../../core/shared/types';
 
 @Entity('tasks')
 export class TaskEntity extends AbstractIdentityEntity<TaskResponseDto> {
@@ -14,11 +14,9 @@ export class TaskEntity extends AbstractIdentityEntity<TaskResponseDto> {
   description?: string;
 
   @Column({
-    type: 'enum',
-    enum: TaskStatus,
-    default: TaskStatus.PENDING,
+    default: 'pending' satisfies TaskStatusType,
   })
-  status: TaskStatus;
+  status: TaskStatusType;
 
   @Column({ type: 'uuid' })
   userId: string;

@@ -1,98 +1,163 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 Task Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A task management system built with NestJS, featuring user authentication, task CRUD operations, comments, and real-time notifications.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## ✨ Features
 
-## Description
+- 🔐 **User Authentication** - JWT-based authentication with bcrypt password hashing
+- 📝 **Task Management** - Create, read, update, and delete tasks with status tracking
+- 💬 **Comments System** - Add comments to tasks with user attribution
+- 🔔 **Real-time Notifications** - Bull queue-based task completion notifications
+- 📊 **Pagination** - Efficient data pagination for large datasets
+- 🗄️ **Database Integration** - PostgreSQL with TypeORM for robust data persistence
+- 🧪 **Comprehensive Testing** - Unit tests with 100% service coverage
+- 🐳 **Docker Support** - Full containerization with Docker Compose
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠️ Tech Stack
 
-## Project setup
+- **Framework**: NestJS (Node.js)
+- **Database**: PostgreSQL 16
+- **ORM**: TypeORM
+- **Authentication**: JWT + bcrypt
+- **Queue**: Bull (Redis-based)
+- **Containerization**: Docker & Docker Compose
 
-```bash
-$ yarn install
-```
+## 🚀 Quick Start with Docker
 
-## Compile and run the project
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) (v20.10+)
+- [Docker Compose](https://docs.docker.com/compose/install/) (v2.0+)
+
+### 1. Clone and Setup
 
 ```bash
-# development
-$ yarn run start
+# Clone the repository
+git clone <repository-url>
+cd task-man
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# Create environment file
+cp .env.example .env
 ```
 
-## Run tests
+### 2. Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Database Configuration
+DB_HOST=postgres
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=password
+DB_DATABASE=taskman-db
+
+# Application Configuration
+PORT=8000
+NODE_ENV=production
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-here
+JWT_EXPIRES_IN=24h
+
+# Security Configuration
+SALT_ROUNDS=10
+
+# Redis Configuration (for Bull queues)
+REDIS_HOST=redis
+REDIS_PORT=6379
+```
+
+### 3. Run with Docker Compose
 
 ```bash
-# unit tests
-$ yarn run test
+# Start all services (app + database)
+docker-compose up -d
 
-# e2e tests
-$ yarn run test:e2e
+# View logs
+docker-compose logs -f
 
-# test coverage
-$ yarn run test:cov
+# Stop all services
+docker-compose down
 ```
 
-## Deployment
+### 4. Access the Application
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- **API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/api (Swagger UI)
+- **Database**: localhost:7432 (PostgreSQL)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🛠️ Development Setup
+
+### Local Development (without Docker)
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+# Install dependencies
+yarn install
+
+# Start PostgreSQL locally (or use Docker)
+docker run -d --name postgres-dev \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=password \
+  -e POSTGRES_DB=taskman-db \
+  -p 5432:5432 \
+  postgres:16
+
+# Run database migrations
+yarn run migration:run
+
+# Start development server
+yarn run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Available Scripts
 
-## Resources
+```bash
+# Development
+yarn run start:dev          # Start with hot reload
+yarn run start:debug        # Start with debugging
 
-Check out a few resources that may come in handy when working with NestJS:
+# Production
+yarn run build              # Build the application
+yarn run start:prod         # Start production server
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Testing
+yarn run test               # Run unit tests
+yarn run test:watch         # Run tests in watch mode
+yarn run test:cov           # Run tests with coverage
+yarn run test:e2e           # Run end-to-end tests
+```
 
-## Support
+## 🐳 Docker Configuration
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Docker Compose Services
 
-## Stay in touch
+The application uses Docker Compose to orchestrate multiple services:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **`app`**: NestJS application container
+- **`postgres`**: PostgreSQL 16 database
+- **`redis`**: Redis for Bull queue
 
-## License
+### Docker Commands
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+# Build and start all services
+docker-compose up -d --build
+
+# View logs for specific service
+docker-compose logs -f app
+docker-compose logs -f postgres
+
+# Execute commands in running container
+docker-compose exec app sh
+docker-compose exec postgres psql -U postgres -d taskman-db
+
+# Stop and remove containers
+docker-compose down
+
+# Remove volumes (WARNING: deletes all data)
+docker-compose down -v
+
+# Rebuild specific service
+docker-compose build app
+```

@@ -28,12 +28,12 @@ const schema = Joi.object<DatabaseConfig>({
 
 export const getConfig = (): DatabaseConfig => {
   const config = {
-    type: (process.env.DATABASE_TYPE || 'postgres') as DatabaseType,
-    database: process.env.DATABASE_NAME || 'taskman-db',
-    host: process.env.DATABASE_HOST || '127.0.0.1',
-    port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-    username: process.env.DATABASE_USER || 'postgres',
-    password: process.env.DATABASE_PASSWORD,
+    type: (process.env.DATABASE_TYPE || process.env.DB_TYPE || 'postgres') as DatabaseType,
+    database: process.env.DATABASE_NAME || process.env.DB_DATABASE || 'taskman-db',
+    host: process.env.DATABASE_HOST || process.env.DB_HOST || '127.0.0.1',
+    port: parseInt(process.env.DATABASE_PORT || process.env.DB_PORT || '5432', 10),
+    username: process.env.DATABASE_USER || process.env.DB_USERNAME || 'postgres',
+    password: process.env.DATABASE_PASSWORD || process.env.DB_PASSWORD,
     synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
     logging: process.env.DATABASE_LOGGING === 'true',
     ssl: null,

@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AbstractDto } from '../../../core/shared/abstract.dto';
-import { TaskStatus } from '../enums/task-status.enum';
+import { TaskStatuses, TaskStatusType } from '../../../core/shared/types';
 import { CommentResponseDto } from './comment.dto';
 
 export class TaskWithCommentsDto extends AbstractDto {
@@ -17,10 +17,10 @@ export class TaskWithCommentsDto extends AbstractDto {
 
   @ApiProperty({ 
     description: 'Task status',
-    enum: TaskStatus
+    enum: TaskStatuses
   })
-  @IsEnum(TaskStatus)
-  status: TaskStatus;
+  @IsEnum(TaskStatuses)
+  status: TaskStatusType;
 
   @ApiProperty({ description: 'User ID who owns the task' })
   @IsUUID()

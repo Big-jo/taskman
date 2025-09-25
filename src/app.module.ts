@@ -93,6 +93,8 @@ export class AppModule implements NestModule {
       })
       .exclude('/auth')
       .exclude('/users')
+      .exclude('/health')
+      .exclude('/api/docs')
       .forRoutes('*');
   }
 }
